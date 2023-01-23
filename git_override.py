@@ -1,4 +1,5 @@
 import os
+import pathlib
 import re
 import sys
 import requests
@@ -21,7 +22,7 @@ def args_to_string(args) -> str:
 
 
 def fetch_issue(issue_key):
-    token_file = open('/Users/sebastiangoral/.jiratoken')
+    token_file = open(str(pathlib.Path.home()) + '/.jiratoken')
     token = token_file.readline()
     token_file.close()
     response = requests.get('https://freenet-group.atlassian.net/rest/api/3/issue/' + issue_key,

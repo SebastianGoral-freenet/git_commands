@@ -8,7 +8,9 @@ Create branches and commit messages based in the issue key.
 1. Clone the repository `git clone git@github.com:SebastianGoral-freenet/git_commands.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Add init script to .bash_profile: `echo "source PATH_TO_REPOSITORY/init.sh" >> ~/.bash_profile"`
-4. Open a new shell
+4. Add JIRA credentials to `~/.jiratoken` in the format `username:api-token`
+   5. An API token can be generated at https://id.atlassian.com/manage-profile/security/api-tokens
+5. Open a new shell
 
 ## Commands overview
 
