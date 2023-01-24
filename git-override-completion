@@ -1,0 +1,11 @@
+shell=$(ps -cp "$$" -o command="")
+
+#if [ "$shell" = "zsh" ] || [ "$shell" = "-zsh" ]; then
+
+if [ "$shell" = "bash" ] || [ "$shell" = "-bash" ]; then
+  current_completion=$(complete -p git | cut -d' ' -f 2- | rev | cut -d' ' -f 2- | rev)
+  complete $current_completion -W "create-branch" git
+else
+  echo "git-commands-completion: unsupported shell: $shell" >&2
+  return
+fi

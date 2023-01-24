@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 shell=$(ps -cp "$$" -o command="")
 if [ "$shell" = "zsh" ] || [ "$shell" = "-zsh" ]; then
   SCRIPT_FILE="${(%):-%N}"
