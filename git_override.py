@@ -34,7 +34,7 @@ def fetch_issue(issue_key):
     return issue
 
 
-def create_branch(args: list):
+def create_branch(args: list) -> bool:
     if len(args) != 1 or re.fullmatch('^(\\w+-)?\\d+$', args[0]) is None:
         eprint('Usage: git create_branch $issue')
         eprint('issue can be the specific issue key (e.g. SPOC-123567) or'
@@ -55,26 +55,29 @@ def create_branch(args: list):
         summary = summary[0:-1]
 
     print('switch -c feature/' + issue_key + '-' + summary)
+    return True
 
 
-def commit(args):
+def commit(args) -> bool:
+    # Don't generate message when message is already specified, or if we are amending
+    if '--amend' in args or '-F' in args or '-m' in args:
+        return False
+
     # Fetch issue by branch name
     working_directory = os.getcwd()
     repo = Repo(working_directory)
     if repo.head.is_detached:
-        print('commit ' + args_to_string(args))
-        exit(0)
+        return False
 
     branch = repo.active_branch.name
     issue_keys = re.findall('\\b([A-Z]+-\\d+\\b)', branch)
     if len(issue_keys) != 1:
-        print('commit ' + args_to_string(args))
-        exit(0)
+        return False
 
     # Fetch issue via api
     issue = fetch_issue(issue_keys[0])
     if not issue:
-        print('commit ' + args_to_string(args))
+        return False
 
     # Translate issue key and summary to commit message
     commit_message = issue['key'] + ' ' + issue['fields']['summary']
@@ -82,6 +85,7 @@ def commit(args):
     print()
     print()
     print('" --edit ' + args_to_string(args))
+    return True
 
 
 overrides = dict()
@@ -91,8 +95,8 @@ overrides['commit'] = commit
 command = sys.argv[1]
 if command in overrides:
     # Call override function
-    overrides[command](sys.argv[2:])
-    exit(0)
+    if overrides[command](sys.argv[2:]):
+        exit(0)
 
 # Call original function
 print(args_to_string(sys.argv[1:]))
