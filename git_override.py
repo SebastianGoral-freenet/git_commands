@@ -65,7 +65,7 @@ def commit(args) -> bool:
 
     # Fetch issue by branch name
     working_directory = os.getcwd()
-    repo = Repo(working_directory)
+    repo = Repo(working_directory, search_parent_directories=True)
     if repo.head.is_detached:
         return False
 
