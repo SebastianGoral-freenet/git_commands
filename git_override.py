@@ -85,6 +85,8 @@ def commit(args) -> bool:
 
     # Translate issue key and summary to commit message
     commit_message = issue['key'] + ' ' + issue['fields']['summary']
+    commit_message = commit_message.replace('"', '\\"')
+    eprint(commit_message)
     print('commit -m "' + commit_message)
     print()
     print()
