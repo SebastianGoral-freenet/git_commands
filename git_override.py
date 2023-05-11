@@ -60,7 +60,7 @@ def create_branch(args: list) -> bool:
 
 def commit(args) -> bool:
     # Don't generate message when message is already specified, or if we are amending
-    if '--amend' in args or '-F' in args or '-m' in args:
+    if '--am' in args or '--amend' in args or '-F' in args or '-m' in args:
         return False
 
     # Fetch issue by branch name
