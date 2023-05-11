@@ -74,8 +74,12 @@ def commit(args) -> bool:
     if len(issue_keys) != 1:
         return False
 
+    issue_key = issue_keys[0]
+    if issue_key == 'GRAON-0000':
+        return False
+
     # Fetch issue via api
-    issue = fetch_issue(issue_keys[0])
+    issue = fetch_issue(issue_key)
     if not issue:
         return False
 
