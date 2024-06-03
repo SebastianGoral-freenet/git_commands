@@ -38,11 +38,11 @@ def create_branch(args: list) -> bool:
     if len(args) != 1 or re.fullmatch('^(\\w+-)?\\d+$', args[0]) is None:
         eprint('Usage: git create_branch $issue')
         eprint('issue can be the specific issue key (e.g. SPOC-123567) or'
-               ' just a number (e.g. 123) which is then interpreted as a GRAON issue')
+               ' just a number (e.g. 123) which is then interpreted as a HYBRIS issue')
         exit(1)
 
     if re.fullmatch('^\\d+$', args[0]) is not None:
-        issue_key = 'GRAON-' + args[0]
+        issue_key = 'HYBRIS-' + args[0]
     else:
         issue_key = args[0]
 
@@ -75,7 +75,7 @@ def commit(args) -> bool:
         return False
 
     issue_key = issue_keys[0]
-    if issue_key == 'GRAON-0000':
+    if issue_key == 'HYBRIS-00000':
         return False
 
     # Fetch issue via api
