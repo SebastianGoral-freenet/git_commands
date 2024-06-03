@@ -13,7 +13,7 @@ original_git=$(which git)
 
 # Intercept git commands
 function git() {
-  result=$(python3 "$SCRIPT_DIR/git_override.py" "$@")
+  result=$("$SCRIPT_DIR/bin/python3" "$SCRIPT_DIR/git_override.py" "$@")
   if [ $? -eq 0 ]; then
     eval "$original_git" $result
   fi
